@@ -1,6 +1,15 @@
 'use strict';
 var i2c = require('i2c');
 
+/**
+ * DAC6573
+ * https://github.com/JW94/DAC6573.git
+ *
+ * Copyright (c) 2017 Jonathan Weinert
+ * Licensed under the MIT license.
+ */
+ 
+
 var REF_VOLTAGE = 4.096;
 var RES = 10;
 var RES_STEPS = Math.pow(2,RES);
@@ -13,12 +22,26 @@ var CHANNELS =
     "dac3": 0x16
 };
 
+ /**
+ * Constructor
+ *
+ * @param  {string} device
+ * @param  {number} address
+ */
+
 var dac6573 = function(device, address) 
 {
     this.device = device;
     this.address = address;
     this.wire = new i2c(this.address,{device: this.device});
 }
+
+/**
+ * Shift data to the right byte-format and send it to the dac6573
+ *
+ * @param  {string} channel
+ * @param  {number} value
+ */
 
 dac6573.prototype.setDACRaw = function(channel,value,callback)
 {
@@ -34,6 +57,14 @@ dac6573.prototype.setDACRaw = function(channel,value,callback)
     });
 }
 
+/**
+ * Calculate the right dac-value in relation of the passed voltage 
+ *
+ * @param  {string} channel
+ * @param  {number} value
+ */
+
+
 dac6573.prototype.setDACVoltage = function(channel,voltage,callback)
 {
     var self = this;
@@ -47,48 +78,7 @@ dac6573.prototype.setDACVoltage = function(channel,voltage,callback)
     });
 }
 
-dac6573.prototype.iterate = function(iterations, process, exit)
-{
-    var self = this;
-    var index = 0, done = false, shouldExit = false;
-    var loop = 
-    {
-        next:function()
-        {
-            if(done)
-            {
-                if(shouldExit && exit);
-                {
-                    
-                }
-            }
-            if(index < iterations)
-            {
-                index++;
-                process(loop);
-            }
-            else
-            {
-                done = true;
-                if(exit)
-                {
-                    exit();
-                }
-            }
-        },
-        iteration:function()
-        {
-            return index - 1;
-        },
-        break:function(end)
-        {
-            done = true;
-            shouldExit = end;
-        }
-    };
-    loop.next();
-};
-
+// Some tests
 //var dac = new dac6573('/dev/i2c-2',0x4C);
 
 // dac.setDACRaw(dac0, 511, function(err)
