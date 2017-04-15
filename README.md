@@ -8,6 +8,7 @@ A module to interact with the dac6573-DAC
   npm install dac6573 --save
 
 ## Usage
+```
 var dac = new dac6573('/dev/i2c-2',0x4C);
 
 dac.setDACVoltage("dac0",2.2,function(err)
@@ -17,6 +18,7 @@ dac.setDACVoltage("dac0",2.2,function(err)
         console.log(err);
     }
 });
+```
 
 ## Release History
 
