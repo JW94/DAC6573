@@ -1,6 +1,6 @@
 {
   "name": "dac6573",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Module to controle the DAC6573",
   "main": "i2c-dac6573.js",
   "scripts": {
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/JW94/DAC6573/issues"
   },
-  "homepage": "https://github.com/JW94/DAC6573#readme"
+  "homepage": "https://github.com/JW94/DAC6573#readme",
+  "dependencies": {
+    "i2c": ">= 0.2.3"
+  }
 }
